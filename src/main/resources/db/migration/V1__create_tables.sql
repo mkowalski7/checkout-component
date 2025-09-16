@@ -26,3 +26,15 @@ CREATE TABLE checkout_products (
     FOREIGN KEY (checkout_session_id) REFERENCES checkout_sessions(id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products(id)
 );
+
+CREATE TABLE promotions (
+    id UUID DEFAULT RANDOM_UUID() PRIMARY KEY
+);
+
+CREATE TABLE promotion_products (
+    id UUID DEFAULT RANDOM_UUID() PRIMARY KEY,
+    promotion_id UUID NOT NULL,
+    product_id UUID NOT NULL,
+    required_quantity INT NOT NULL,
+    discount_amount DECIMAL(10, 2) NOT NULL
+);

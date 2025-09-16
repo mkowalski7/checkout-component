@@ -29,8 +29,13 @@ public class CheckoutReceiptResponse {
         private String sku;
         private String name;
         private Integer quantity;
+
+        // Prices breakdown for one piece
         private BigDecimal price;
         private BigDecimal discount;
         private BigDecimal finalPrice;
+
+        // Price for the whole products
+        private BigDecimal totalPrice;
     }
 }

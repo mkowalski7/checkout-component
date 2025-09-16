@@ -36,13 +36,16 @@ public class CheckoutProduct {
 
     @Column(precision = 10, scale = 2)
     @PositiveOrZero
-    private BigDecimal price;
+    @Builder.Default
+    private BigDecimal price = BigDecimal.ZERO;
 
     @Column(precision = 10, scale = 2)
     @PositiveOrZero
-    private BigDecimal discount;
+    @Builder.Default
+    private BigDecimal discount = BigDecimal.ZERO;
 
     @Column(precision = 10, scale = 2)
     @PositiveOrZero
-    private BigDecimal finalPrice;
+    @Builder.Default
+    private BigDecimal finalPrice = BigDecimal.ZERO;
 }
