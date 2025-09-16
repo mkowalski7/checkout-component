@@ -17,6 +17,7 @@ import pl.checkout.model.Product;
 import pl.checkout.repository.CheckoutRepository;
 import pl.checkout.repository.ProductRepository;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -114,7 +115,7 @@ public class CheckoutService {
     }
 
     private CheckoutSession getOpenSessionOrThrow(UUID sessionId) {
-        return checkoutRepository.findByIdAndStatus(sessionId, PaymentStatus.PENDING)
+        return checkoutRepository.findByIdAndPaymentStatus(sessionId, PaymentStatus.PENDING)
                 .orElseThrow(() -> new SessionNotFoundException("Open checkout session with ID " + sessionId + " does not exist"));
     }
 
@@ -155,7 +156,8 @@ public class CheckoutService {
                             checkoutProduct.getQuantity(),
                             checkoutProduct.getPrice(),
                             checkoutProduct.getDiscount(),
-                            checkoutProduct.getFinalPrice()
+                            checkoutProduct.getFinalPrice(),
+                            checkoutProduct.getFinalPrice().multiply(BigDecimal.valueOf(checkoutProduct.getQuantity()))
                     );
                 }).toList();
 

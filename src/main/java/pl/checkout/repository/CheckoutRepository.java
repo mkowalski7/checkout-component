@@ -10,5 +10,5 @@ import java.util.UUID;
 
 @Repository
 public interface CheckoutRepository extends JpaRepository<CheckoutSession, UUID> {
-    Optional<CheckoutSession> findByIdAndStatus(UUID id, PaymentStatus status);
+    Optional<CheckoutSession> findByIdAndPaymentStatus(UUID id, PaymentStatus paymentStatus);
 }
