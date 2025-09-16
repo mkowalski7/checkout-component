@@ -30,4 +30,8 @@ public class Product {
     @Column(precision = 10, scale = 2)
     @Positive
     private BigDecimal price;
+
+    public String getSKU() {
+        return sku;
+    }
 }

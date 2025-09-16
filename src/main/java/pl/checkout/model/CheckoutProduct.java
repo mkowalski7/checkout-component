@@ -41,4 +41,8 @@ public class CheckoutProduct {
     @Column(precision = 10, scale = 2)
     @PositiveOrZero
     private BigDecimal discount;
+
+    @Column(precision = 10, scale = 2)
+    @PositiveOrZero
+    private BigDecimal finalPrice;
 }
