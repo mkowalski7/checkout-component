@@ -8,6 +8,7 @@ import pl.checkout.dto.request.ProductAddRequest;
 import pl.checkout.dto.request.ProductRemoveRequest;
 import pl.checkout.dto.response.CheckoutReceiptResponse;
 import pl.checkout.dto.response.CheckoutSessionResponse;
+import pl.checkout.enums.PaymentStatus;
 import pl.checkout.exception.SessionException;
 import pl.checkout.exception.SessionNotFoundException;
 import pl.checkout.model.CheckoutProduct;
@@ -45,7 +46,7 @@ public class CheckoutService {
     }
 
     public CheckoutSessionResponse addProduct(UUID sessionId, ProductAddRequest request) {
-        CheckoutSession session = getSessionOrThrow(sessionId);
+        CheckoutSession session = getOpenSessionOrThrow(sessionId);
         Product product = getProductOrThrow(request.getSKU());
 
         Optional<CheckoutProduct> checkoutProduct = session.getProducts().stream()
@@ -73,7 +74,7 @@ public class CheckoutService {
     }
 
     public CheckoutSessionResponse removeProduct(UUID sessionId, ProductRemoveRequest request) {
-        CheckoutSession session = getSessionOrThrow(sessionId);
+        CheckoutSession session = getOpenSessionOrThrow(sessionId);
 
         Optional<CheckoutProduct> checkoutProduct = session.getProducts().stream()
                 .filter(cp -> cp.getProduct().getSKU().equals(request.getSKU()))
@@ -110,6 +111,11 @@ public class CheckoutService {
     private CheckoutSession getSessionOrThrow(UUID sessionId) {
         return checkoutRepository.findById(sessionId)
                 .orElseThrow(() -> new SessionNotFoundException("Checkout session with ID " + sessionId + " does not exist"));
+    }
+
+    private CheckoutSession getOpenSessionOrThrow(UUID sessionId) {
+        return checkoutRepository.findByIdAndStatus(sessionId, PaymentStatus.PENDING)
+                .orElseThrow(() -> new SessionNotFoundException("Open checkout session with ID " + sessionId + " does not exist"));
     }
 
     private Product getProductOrThrow(String sku) {
