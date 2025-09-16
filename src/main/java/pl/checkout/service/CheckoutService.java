@@ -132,7 +132,6 @@ public class CheckoutService {
         return CheckoutSessionResponse
                 .builder()
                 .id(session.getId())
-                .paymentStatus(session.getPaymentStatus())
                 .products(products)
                 .totalAmount(session.getTotalAmount())
                 .totalDiscount(session.getTotalDiscount())

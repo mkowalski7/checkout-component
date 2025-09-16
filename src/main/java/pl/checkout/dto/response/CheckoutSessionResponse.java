@@ -4,7 +4,6 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import pl.checkout.enums.PaymentStatus;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -16,7 +15,6 @@ import java.util.UUID;
 public class CheckoutSessionResponse {
     private UUID id;
 
-    private PaymentStatus paymentStatus;
     private List<SessionProductResponse> products;
 
     private BigDecimal totalAmount;
